@@ -1,3 +1,4 @@
+//Array of financial data
 var finances = [
   ['Jan-2010', 867884],
   ['Feb-2010', 984655],
@@ -87,24 +88,40 @@ var finances = [
   ['Feb-2017', 671099],
 ];
 
-console.log(finances);
+//Variable declarations
+var totalMonths = 0;
+var profitMonths = 0;
+var lossMonths = 0;
+var totalMoney = 0;
 
-var profitMonth = 0;
-var lossMonth = 0;
+//For loop
+for(var i=0; i<finances.length; i++){ //iterate through array (for the length of the array)
+  
+  totalMonths++; //increment variable with each iteration - after loop value will represent total number of months
 
-for(var i=0; i<finances.length; i++){
-  if(finances[i][1] > 0){
-    console.log('In ' + finances[i][0] + ' the company made a profit.')
-    profitMonth++
+  totalMoney+=finances[i][1]; //adds current amount to totalMoney variable
+
+  console.log(finances[i][1]);
+  console.log('Running total: ' + totalMoney);
+
+  //if statement checks whether finances of month in this iteration are positive or negative
+  //if it is positive, the variable profitMonths is incremented
+  if(finances[i][1] > 0){ 
+    console.log('In ' + finances[i][0] + ' the company made a profit.');
+    profitMonths++
   }
+  //if it is negative, lossMonths is incremented
   else if(finances[i][1] < 0){
-    console.log('In ' + finances[i][0] + ' the company incurred a loss.')
-    lossMonth++;
+    console.log('In ' + finances[i][0] + ' the company incurred a loss.');
+    lossMonths++;
   }
+  //if it is 0, neither is incremented
   else{
-    console.log('in ' +  finances[i][1] + 'the company broke even' )
+    console.log('in ' +  finances[i][1] + 'the company broke even' );
   }
 }
 
-console.log('Months of profit: ' + profitMonth);
-console.log('Months of loss: ' + lossMonth);
+//Number of months in profit or loss are logged to console respectively 
+console.log('Months of profit: ' + profitMonths);
+console.log('Months of loss: ' + lossMonths);
+
