@@ -88,6 +88,8 @@ var finances = [
   ['Feb-2017', 671099],
 ];
 
+var monthToMonth = [];
+
 //Variable declarations
 var totalMonths = 0;
 var profitMonths = 0;
@@ -119,9 +121,27 @@ for(var i=0; i<finances.length; i++){ //iterate through array (for the length of
   else{
     console.log('in ' +  finances[i][1] + 'the company broke even' );
   }
+
+  //if statement checks if iteration has moved through at least one cycle i.e. one month has been analysed
+  if(i>0 && i<finances.length){
+
+  //if statement ensures the month to month difference is accurate by not subtracting a negative value (which would inadvertently add it)
+    if(finances[i-1][1] + finances[i][1] > 0){
+      monthToMonth[i-1] = finances[i-1][1] - finances[i][1];
+    }
+
+    else if(finances[i-1][1] + finances[i][1] < 0) {
+      monthToMonth[i-1] = finances[i-1][1] + finances[i][1];
+    }
+
+    //difference is logged to console
+    console.log('Difference between ' + finances[i-1][0] + ' and ' + finances[i][0] + ' is: ' + monthToMonth[i-1]);
+  }
 }
 
 //Number of months in profit or loss are logged to console respectively 
 console.log('Months of profit: ' + profitMonths);
 console.log('Months of loss: ' + lossMonths);
+
+
 
