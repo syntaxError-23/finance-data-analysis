@@ -93,20 +93,25 @@ var monthToMonth = [];
 //Variable declarations
 var totalMonths = 0;
 var profitMonths = 0;
-var lossMonths = 0;     
+var lossMonths = 0;
+var totalMoney = 0;
 
-var greaterValue = 0;
-var lesserValue = 0;
+//greaterValue and lesserValue are set to negative infinity and infinity respectively
+//These variables will store the highest and lowest changes in profit and loss. They are set to these values to ensure they are initially lower (greaterValue) or higher (lesserValue) than any monthToMonth value  
+var greaterValue = Infinity * -1; 
+var lesserValue = Infinity;
+
 var monthToMonthAverage = 0;
 var monthToMonthTotal = 0;
 var monthToMonthHighest = 0;
 var monthToMonthLowest = 0;
 
-
 //For loop
 for(var i=0; i<finances.length; i++){ //iterate through array (for the length of the array)
   
   totalMonths++; //increment variable with each iteration - after loop value will represent total number of months
+  
+  totalMoney += finances[i][1]; //Add current value of finances to totalMoney to calculate total profit/loss
 
   //if statement checks whether finances of month in this iteration are positive or negative
   //if it is positive, the variable profitMonths is incremented
@@ -126,26 +131,17 @@ for(var i=0; i<finances.length; i++){ //iterate through array (for the length of
   if(i>0 && i<finances.length){
 
     monthToMonth[i-1] = finances[i-1][1] - finances[i][1]; //calculate difference between last month and this month
-    
-    console.log('Difference between ' + finances[i-1][0] + ' and ' + finances[i][0] + ' is: ' + monthToMonth[i-1]);
-    
+        
     //Check if last month value is greater than this month value (Decrease) AND difference calculated is postive (indicating increase)
      if(finances[i-1][1] > finances[i][1] && monthToMonth[i-1] > 0){
       monthToMonth[i-1] *=-1; //change to negative to reflect decrease
      }
-
      //check if last month value is less than this month value (increase) AND difference calculated is negative (indicating decrease)
      else if(finances[i-1][1] < finances[i][1] && monthToMonth[i-1] < 0){
       monthToMonth[i-1]*=-1; //change to positive to reflect increase
      }
-
-     
-     console.log('Difference (Adjusted to represent direction): ' + monthToMonth[i-1]);
-
-
   }
 }
-
 
 //for loop to iterate through each item in monthToMonth array
 for(var j=0; j<monthToMonth.length; j++){
@@ -175,25 +171,34 @@ for(var j=0; j<monthToMonth.length; j++){
   }
 
   monthToMonthAverage = monthToMonthTotal / monthToMonth.length;
-
-  console.log('previous: ' + monthToMonth[j-1])
-  console.log('Current: ' + monthToMonth[j])
-  console.log('Greater value: ' + greaterValue);
-  console.log('Lesser value: ' + lesserValue);
-
-  console.log('---------------------------------------------------------');
-  console.log('---------------------------------------------------------');  
 }
 
-console.log('Average month to month profit/loss change: ' + monthToMonthAverage);
+//lesserValue converted to string and sliced to put (-) sign at start rather than after dollar sign;
+var lesserValueString = lesserValue.toString();
+lesserValueString = lesserValueString.slice(0,1) + '$' + lesserValueString.slice(1);
 
-// console.log('total difference: ' + monthToMonthTotal);
-// console.log(monthToMonth);
+//
+var averageChangeString = monthToMonthAverage.toFixed(2).toString();
+
+averageChangeString = averageChangeString.slice(0,1) + '$' + averageChangeString.slice(1);
+// averageChangeString = averageChangeString.slice(0,1) + '$' + averageChangeString.slice(1);
 
 
-// //Number of months in profit or loss are logged to console respectively 
-// console.log('Months of profit: ' + profitMonths);
-// console.log('Months of loss: ' + lossMonths);
+console.log('Financial Analysis');
+console.log('------------------------------------------------')
+console.log('')
+
+console.log('Total Months: ' + totalMonths);
+console.log('')
+console.log('Total Profit/Loss: $' + totalMoney);
+console.log('')
+console.log('Average change: ' + averageChangeString);
+console.log('')
+console.log('Greatest increase in profits/losses: $' + greaterValue);
+console.log('')
+console.log('Greatest decrease in profits/losses: ' + lesserValueString);
+
+
 
 
 
