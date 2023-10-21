@@ -88,7 +88,9 @@ var finances = [
   ['Feb-2017', 671099],
 ];
 
+
 var monthToMonth = [];
+
 
 //Variable declarations
 var totalMonths = 0;
@@ -96,15 +98,15 @@ var profitMonths = 0;
 var lossMonths = 0;
 var totalMoney = 0;
 
-//greaterValue and lesserValue are set to negative infinity and infinity respectively
-//These variables will store the highest and lowest changes in profit and loss. They are set to these values to ensure they are initially lower (greaterValue) or higher (lesserValue) than any monthToMonth value  
-var greaterValue = Infinity * -1; 
-var lesserValue = Infinity;
+//These two arrays will contain the month and numeric data of the greatest upward and downard change in profit less respectively
+//the second position of each is set to negative infinity and infinity respectively to ensure that initially they are lower or higher than any value in the data set
+var greaterValue = ['', Infinity * -1]
+var lesserValue = ['', Infinity]
+
 
 var monthToMonthAverage = 0;
 var monthToMonthTotal = 0;
-var monthToMonthHighest = 0;
-var monthToMonthLowest = 0;
+
 
 //For loop
 for(var i=0; i<finances.length; i++){ //iterate through array (for the length of the array)
@@ -130,15 +132,18 @@ for(var i=0; i<finances.length; i++){ //iterate through array (for the length of
   //if statement checks if iteration has moved through at least one cycle i.e. one month has been analysed
   if(i>0 && i<finances.length){
 
-    monthToMonth[i-1] = finances[i-1][1] - finances[i][1]; //calculate difference between last month and this month
-        
+    //with each iteration, a new array is pushed which will contain the month in one index and the numeric data in another
+    monthToMonth.push([]);
+
+    monthToMonth[i-1][1] = finances[i-1][1] - finances[i][1]; //calculate difference between last month and this month
+    monthToMonth[i-1][0] = finances[i][0];
     //Check if last month value is greater than this month value (Decrease) AND difference calculated is postive (indicating increase)
-     if(finances[i-1][1] > finances[i][1] && monthToMonth[i-1] > 0){
-      monthToMonth[i-1] *=-1; //change to negative to reflect decrease
+     if(finances[i-1][1] > finances[i][1] && monthToMonth[i-1][1] > 0){
+      monthToMonth[i-1][1] *=-1; //change to negative to reflect decrease
      }
      //check if last month value is less than this month value (increase) AND difference calculated is negative (indicating decrease)
-     else if(finances[i-1][1] < finances[i][1] && monthToMonth[i-1] < 0){
-      monthToMonth[i-1]*=-1; //change to positive to reflect increase
+     else if(finances[i-1][1] < finances[i][1] && monthToMonth[i-1][1] < 0){
+      monthToMonth[i-1][1]*=-1; //change to positive to reflect increase
      }
   }
 }
@@ -146,44 +151,56 @@ for(var i=0; i<finances.length; i++){ //iterate through array (for the length of
 //for loop to iterate through each item in monthToMonth array
 for(var j=0; j<monthToMonth.length; j++){
 
-  monthToMonthTotal+=monthToMonth[j]; //adds up all changes in profit/loss
+  monthToMonthTotal+=monthToMonth[j][1]; //adds up all changes in profit/loss
 
   //checks if at least one iteration has occurred
   if(j>0){ 
     
     //checks if previous value is greater than current and checks if that value is greater than greater value
-    if(monthToMonth[j-1] > monthToMonth[j] && monthToMonth[j-1] > greaterValue){
-      greaterValue = monthToMonth[j-1]; //assigns greaterValue with this value
+    if(monthToMonth[j-1][1] > monthToMonth[j][1] && monthToMonth[j-1][1] > greaterValue[1]){
+      greaterValue[1] = monthToMonth[j-1][1]; //assigns greaterValue with this value
+      greaterValue[0] = monthToMonth[j-1][0];
     }
     //checks if current value is greater than previous and checks if that value is greater than greater value
-    else if(monthToMonth[j-1] < monthToMonth[j] && monthToMonth[j] > greaterValue){
-      greaterValue = monthToMonth[j];//assigns greaterValue with this value
+    else if(monthToMonth[j-1][1] < monthToMonth[j][1] && monthToMonth[j][1] > greaterValue[1]){
+      greaterValue[1] = monthToMonth[j][1];//assigns greaterValue with this value
+      greaterValue[0] = monthToMonth[j][0];
     }
+    
     //checks if previous value is less than current and checks if that value is less than the variable lesserValue
-    else if(monthToMonth[j-1] < monthToMonth[j] && monthToMonth[j-1] < lesserValue){
-      lesserValue = monthToMonth[j-1]; //assigns lesserValue with this value
+    else if(monthToMonth[j-1][1] < monthToMonth[j][1] && monthToMonth[j-1][1] < lesserValue[1]){
+      lesserValue[1] = monthToMonth[j-1][1]; //assigns lesserValue with this value
+      lesserValue[0] = monthToMonth[j-1][0];
     }
     //checks if current value is less than previous and checks if that value is less than the variable lesserValue
-    else if(monthToMonth[j-1] > monthToMonth[j] && monthToMonth[j-1] < lesserValue){
-      lesserValue = monthToMonth[j]; //assigns lesserValue with this value
+    else if(monthToMonth[j-1][1] > monthToMonth[j][1] && monthToMonth[j-1][1] < lesserValue[1]){
+      lesserValue[1] = monthToMonth[j][1]; //assigns lesserValue with this value
+      lesserValue[0] = monthToMonth[j][0];
     }
-
   }
-
   monthToMonthAverage = monthToMonthTotal / monthToMonth.length;
 }
 
-//lesserValue converted to string and sliced to put (-) sign at start rather than after dollar sign;
-var lesserValueString = lesserValue.toString();
+//lesserValue[1] (The numeric finance data) converted to string and sliced to put (-) sign at start rather than after dollar sign;
+
+var lesserValueString = lesserValue[1].toString();
 lesserValueString = lesserValueString.slice(0,1) + '$' + lesserValueString.slice(1);
 
-//
+lesserValue[1] = lesserValueString;
+
+//greaterValue[1] (The numeric finance data) converted to string and concatenated with ($) sign. This new string is assigned to greaterValue[1] to be displayed in console 
+
+var greaterValueString = greaterValue[1].toString();
+greaterValueString = ( '$' + greaterValueString)
+greaterValue[1] = greaterValueString;
+
+//monthToMonthAverage rounded to 2dp and converted to string. then it's sliced to put (-) sign at start rather than after dollar sign;
+
 var averageChangeString = monthToMonthAverage.toFixed(2).toString();
 
 averageChangeString = averageChangeString.slice(0,1) + '$' + averageChangeString.slice(1);
-// averageChangeString = averageChangeString.slice(0,1) + '$' + averageChangeString.slice(1);
 
-
+//Results logged to console
 console.log('Financial Analysis');
 console.log('------------------------------------------------')
 console.log('')
@@ -194,11 +211,9 @@ console.log('Total Profit/Loss: $' + totalMoney);
 console.log('')
 console.log('Average change: ' + averageChangeString);
 console.log('')
-console.log('Greatest increase in profits/losses: $' + greaterValue);
+console.log('Greatest increase in profits/losses: ' + greaterValue);
 console.log('')
-console.log('Greatest decrease in profits/losses: ' + lesserValueString);
-
-
+console.log('Greatest decrease in profits/losses: ' + lesserValue);
 
 
 
