@@ -25,7 +25,7 @@ The program's code (written in javascript) can be roughly split into 4 parts:
 The data set is stored in the array `finances` , Which can be viewed below.
 
 <details>
-**<summary><b>Click to view data set</b></summary>
+**<summary><b><span style ="color: red;">Click to view data set</span></b></summary>
 
 var finances = [
 
@@ -212,7 +212,7 @@ The variables are given names that suggest the type of data they will store.
 The code for this section is as follows: 
 
 <details>
-<summary><b><span style = "color: red;" >Click here to view code block</span></b><summary>
+<summary><b><span style ="color: red;">Click here to view code block </span></b></summary>
 
 
 ```
@@ -259,6 +259,9 @@ The operation of these variables and importance of these initial values will bec
 
 The code for this section is as follows: 
 
+<details>
+<summary><b><span style ="color: red;">Click here to view code block </span> </b></summary>
+
 ```
 for(var i=0; i<finances.length; i++){ 
   
@@ -293,12 +296,17 @@ for(var j=0; j<monthToMonth.length; j++){
 
 ```
 
+</details>
+
 
 ---
 
 ### For loop 2
 
 The code for this section is as follows: 
+
+<details>
+<summary><b><span style ="color: red;">Click here to view code block </span> </b></summary>
 
 ```
 
@@ -332,12 +340,17 @@ if(j>0){
 
 ```
 
+</details>
+
 
 ---
 
 ### Formatting and displaying information
 
 The code for this section is as follows: 
+
+<details>
+<summary><b><span style ="color: red;">Click here to view code block </span> </b></summary>
 
 ```
 
@@ -363,7 +376,7 @@ var averageChangeString = monthToMonthAverage.toFixed(2).toString();
 
 averageChangeString = averageChangeString.slice(0,1) + '$' + averageChangeString.slice(1);
 
-//Results logged to console
+
 console.log('Financial Analysis');
 console.log('------------------------------------------------')
 console.log('')
@@ -379,6 +392,8 @@ console.log('')
 console.log('Greatest decrease in profits/losses: ' + greatestDecreaseDisplay);
 
 ```
+
+</details> 
 
 
 
