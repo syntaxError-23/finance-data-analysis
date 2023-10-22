@@ -255,12 +255,14 @@ The operation of these variables and importance of these initial values will bec
 
 ### For loop 1
 
+The purpose of **For loop 1** is to iterate through the financial data. As it does, the difference (in profit/loss) between 2 adjacent months is calculated. 
 
+The total amount of months (stored in `totalMonths`) is also calculated here as well as the total amount of profit/loss across the entire data set (stored on `totalMoney`). 
 
 The code for this section is as follows: 
 
 <details>
-<summary><b><span style ="color: red;">Click here to view code block </span> </b></summary>
+<summary><b><span style ="color: red;">Click here to view code block </span></b></summary>
 
 ```
 for(var i=0; i<finances.length; i++){ 
@@ -289,19 +291,49 @@ for(var i=0; i<finances.length; i++){
 }
 
 
-for(var j=0; j<monthToMonth.length; j++){
-
-  monthToMonthTotal+=monthToMonth[j][1];
-
 
 ```
 
 </details>
 
+The conditional statement `for(var i=0; i<finances.length; i++){ ...}` ensures that the loop has already run once. 
+
+next an array is pushed to the array `monthToMonth` (initialised in the variable declarations section). This adds the new array *inside* the already existing `monthToMonth` array
+
+The difference between the previous and current month is then calculated like so: 
+
+`monthToMonth[i-1][1] = finances[i-1][1] - finances[i][1];`
+
+The result of the calculation is stored in the second position if the newly created (inner) array.
+
+The name of the current month (found in the first postion of the finances array at the current iteration) is set as the value of the first index of the `monthToMonth` array.
+
+`monthToMonth[i-1][0] = finances[i][0];`
+
+To make sure that the difference in profit/loss calculated above correctly reflects the trajectory of profit/loss. 
+
+To this end there is another conditional statement: 
+
+`if(finances[i-1][1] > finances[i][1] && monthToMonth[i-1][1] > 0){...}`
+
+This statement checks if the profit/loss of the previous month is higher than the current month (indicating a downward movement) AND the difference calculated is positive (indicating an upward movement). 
+
+When this condition is met, the difference calculated is multiplied by -1: 
+
+`monthToMonth[i-1][1] *=-1;`
+
+the next line, `else if(finances[i-1][1] < finances[i][1] && monthToMonth[i-1][1] < 0){...}` checks if the inverse is true and corrects it when the condition is met.
+
 
 ---
 
 ### For loop 2
+
+**For loop 2** iterates through the `monthToMonth` array and contains conditional statements that determine greatest increase in profit/loss between two adjacent months (stored in `greaterValue`) and the greatest decrease in profit/loss between two adjacent months (stored in `lesserValue`). 
+
+these to variables (`greaterValue` and `lesserValue`) are arrays. in the first index they store the month (by name) of greatest increase and decrease in profit/loss respectively. 
+
+in the second index they store numeric value of this increase or decrease. 
 
 The code for this section is as follows: 
 
@@ -310,6 +342,10 @@ The code for this section is as follows:
 
 ```
 
+for(var j=0; j<monthToMonth.length; j++){
+
+  monthToMonthTotal+=monthToMonth[j][1]; 
+  
 if(j>0){ 
     
 
@@ -341,6 +377,45 @@ if(j>0){
 ```
 
 </details>
+
+firstly the total amount of profit/loss changes is calculated and stored in  `monthToMonthTotal`. This is later used to calculate the average (mean) change in profit/loss between months.
+
+The conditional statement `if(j>0){...}` checks if the loop has iterated once so that the 'previous month' (`monthToMonth[j-1]`) is not accessed. This would be an undefined value. 
+
+Nested within this statement is a series of conditional statements. The first one looks like this: 
+
+`if(monthToMonth[j-1][1] > monthToMonth[j][1] && monthToMonth[j-1][1] > greaterValue[1]){`
+
+This checks if the change in profit/loss of the previous month is greater than the profit/loss change of the current month AND if the change in profit/loss of the previous month is greater than the value stored in `greaterValue[1]`. 
+
+If these conditions are met, `greaterValue[1]` is set to the value of the profit/loss change in the previous month. 
+
+The name of this month is set as the value of `greaterValue[0]`
+
+This is why it was important to set the initial value of `greaterValue[1]` to negative infinity - to guarantee it does not inadvertently affect the data.
+
+
+
+```
+      else if(monthToMonth[j-1][1] < monthToMonth[j][1] && monthToMonth[j][1] > greaterValue[1]){
+      greaterValue[1] = monthToMonth[j][1];
+      greaterValue[0] = monthToMonth[j][0];
+    }
+    
+
+    else if(monthToMonth[j-1][1] < monthToMonth[j][1] && monthToMonth[j-1][1] < lesserValue[1]){
+      lesserValue[1] = monthToMonth[j-1][1]; 
+      lesserValue[0] = monthToMonth[j-1][0];
+    }
+    
+    else if(monthToMonth[j-1][1] > monthToMonth[j][1] && monthToMonth[j-1][1] < lesserValue[1]){
+      lesserValue[1] = monthToMonth[j][1]; 
+      lesserValue[0] = monthToMonth[j][0];
+    }
+    
+```
+
+The rest of the conditionals follow a similar logic to determine the highest or lowest value. 
 
 
 ---
