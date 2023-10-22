@@ -1,5 +1,13 @@
 # Finance Data Analysis
 
+## Contents
+
+- [About The project](#about-the-project)
+- [How do I use the program?](#how-do-i-use-the-program)
+- [How does it work?](#how-does-it-work)
+- [How do I access the page?](#how-do-i-access-the-page)
+
+
 ## About The Project
 
 The program analyses a set of data - profits and losses - and logs some helpful information in the console. The information logged consists of:
@@ -11,21 +19,39 @@ The program analyses a set of data - profits and losses - and logs some helpful 
 5. Greatest decrease in profit and loss
 
 
-## How do I use the program
+## How do I use the program?
 
-## How does it work
+To acces the information processed by the program, open the console. The webpage has instructions and screenshot that direct you on how to do this.
+
+Whilst the screenshot shows how to access the console using chrome, for most browsers, the procedure is very similar if not the same.
+
+The images below show the webpage and the screenshot it includes:
+
+\
+**Webpage screenshot**
+\
+<img src="./images/page-ss.png">
+
+\
+**Tutorial image**
+\
+<img src="./images/tutorial-image.png">
+
+
+
+## How does it work?
 
 The program's code (written in javascript) can be roughly split into 4 parts:
 
-1. Variable declarations
-2. For loop 1 - Calculates difference between profit/loss of 2 adjacent months
-3. For loop 2 - Ensures the difference actively reflects trajectory of profit/loss 
-4. Formatting and displaying information
+1. [Variable declarations](#variable-declarations)
+2. [For loop 1](#for-loop-1) - Calculates difference between profit/loss of 2 adjacent months
+3. [For loop 2](#for-loop-2) - Ensures the difference actively reflects trajectory of profit/loss 
+4. [Formatting and displaying information](#formatting-and-displaying-information)
 
 The data set is stored in the array `finances` , Which can be viewed below.
 
 <details>
-**<summary><b><span style ="color: red;">Click to view data set</span></b></summary>
+**<summary><b><span style ="color: red;">Click here to view data set</span></b></summary>
 
 var finances = [
 
@@ -422,6 +448,13 @@ The rest of the conditionals follow a similar logic to determine the highest or 
 
 ### Formatting and displaying information
 
+The formatting changes are to improve are done to improve readability. The two negative data points (`monthToMonthAverage` and `lesserValue`) initally show the dollar sign ($) before the minus sign (-). 
+
+to counteract this, the numbers are converted to strings and sliced (using the `.slice()` string method) after the first character. Then they are concatenated, including the dollar sign ($) between the now seperate strings.
+
+
+
+
 The code for this section is as follows: 
 
 <details>
@@ -434,18 +467,15 @@ lesserValueString = lesserValueString.slice(0,1) + '$' + lesserValueString.slice
 
 lesserValue[1] = lesserValueString;
 
-var greatestDecreaseDisplay = (lesserValue[0] + ' (' + lesserValue[1] + ')') //concatenates both indexes of lesserValue to make it more readable
+var greatestDecreaseDisplay = (lesserValue[0] + ' (' + lesserValue[1] + ')') 
 
-//greaterValue[1] (The numeric finance data) converted to string and concatenated with ($) sign. This new string is assigned to greaterValue[1] to be displayed in console 
 
 var greaterValueString = greaterValue[1].toString();
 greaterValueString = ( '$' + greaterValueString)
 greaterValue[1] = greaterValueString;
 
-var greatestincreaseDisplay = (greaterValue[0] + ' (' + greaterValue[1] + ')') //concatenates both indexes of greaterValue to make it more readable
+var greatestincreaseDisplay = (greaterValue[0] + ' (' + greaterValue[1] + ')') 
 
-
-//monthToMonthAverage rounded to 2dp and converted to string. then it's sliced to put (-) sign at start rather than after dollar sign;
 
 var averageChangeString = monthToMonthAverage.toFixed(2).toString();
 
@@ -469,6 +499,12 @@ console.log('Greatest decrease in profits/losses: ' + greatestDecreaseDisplay);
 ```
 
 </details> 
+
+The blank console logs (`console.log('')`) are there to provide space between each output for readability.  
+
+## How do I access the page?
+
+The project is available github pages. [Click here](https://syntaxerror-23.github.io/finance-data-analysis/) to access it.
 
 
 
