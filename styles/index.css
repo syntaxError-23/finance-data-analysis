@@ -1,0 +1,27 @@
+*{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+body{
+    background-color: rgb(116, 158, 144);
+}
+
+h2{
+    color: rgb(58, 91, 80);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+div.tut-image{
+    max-width: 50%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    
+}
+
+img{
+    width: 60vw;
+    border: 2px solid rgb(58, 91, 80);
+    border-radius: 4px;
+}

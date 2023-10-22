@@ -94,8 +94,6 @@ var monthToMonth = [];
 
 //Variable declarations
 var totalMonths = 0;
-var profitMonths = 0;
-var lossMonths = 0;
 var totalMoney = 0;
 
 //These two arrays will contain the month and numeric data of the greatest upward and downard change in profit less respectively
@@ -114,20 +112,6 @@ for(var i=0; i<finances.length; i++){ //iterate through array (for the length of
   totalMonths++; //increment variable with each iteration - after loop value will represent total number of months
   
   totalMoney += finances[i][1]; //Add current value of finances to totalMoney to calculate total profit/loss
-
-  //if statement checks whether finances of month in this iteration are positive or negative
-  //if it is positive, the variable profitMonths is incremented
-  if(finances[i][1] > 0){ 
-    profitMonths++
-  }
-  //if it is negative, lossMonths is incremented
-  else if(finances[i][1] < 0){
-    lossMonths++;
-  }
-  //if it is 0, neither is incremented
-  else{
-    console.log('in ' +  finances[i][1] + 'the company broke even' );
-  }
 
   //if statement checks if iteration has moved through at least one cycle i.e. one month has been analysed
   if(i>0 && i<finances.length){
@@ -188,11 +172,16 @@ lesserValueString = lesserValueString.slice(0,1) + '$' + lesserValueString.slice
 
 lesserValue[1] = lesserValueString;
 
+var greatestDecreaseDisplay = (lesserValue[0] + ' (' + lesserValue[1] + ')') //concatenates both indexes of lesserValue to make it more readable
+
 //greaterValue[1] (The numeric finance data) converted to string and concatenated with ($) sign. This new string is assigned to greaterValue[1] to be displayed in console 
 
 var greaterValueString = greaterValue[1].toString();
 greaterValueString = ( '$' + greaterValueString)
 greaterValue[1] = greaterValueString;
+
+var greatestincreaseDisplay = (greaterValue[0] + ' (' + greaterValue[1] + ')') //concatenates both indexes of greaterValue to make it more readable
+
 
 //monthToMonthAverage rounded to 2dp and converted to string. then it's sliced to put (-) sign at start rather than after dollar sign;
 
@@ -211,9 +200,9 @@ console.log('Total Profit/Loss: $' + totalMoney);
 console.log('')
 console.log('Average change: ' + averageChangeString);
 console.log('')
-console.log('Greatest increase in profits/losses: ' + greaterValue);
+console.log('Greatest increase in profits/losses: ' + greatestincreaseDisplay);
 console.log('')
-console.log('Greatest decrease in profits/losses: ' + lesserValue);
+console.log('Greatest decrease in profits/losses: ' + greatestDecreaseDisplay);
 
 
 
