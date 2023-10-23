@@ -504,7 +504,7 @@ The blank console logs (`console.log('')`) are there to provide space between ea
 
 ## How do I access the page?
 
-The project is available github pages. [Click here](https://syntaxerror-23.github.io/finance-data-analysis/) to access it.
+The project is available via github pages. [Click here](https://syntaxerror-23.github.io/finance-data-analysis/) to access it.
 
 
 
